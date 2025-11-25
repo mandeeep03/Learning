@@ -120,10 +120,99 @@
 
 // System-level Node usage
 
-import os from 'os';
+// import os from 'os';
 
-console.log(os.totalmem());
-console.log(os.freemem());
-console.log(os.cpus());
-console.log(os.platform());
-console.log(os.homedir());
+// console.log(os.totalmem());
+// console.log(os.freemem());
+// console.log(os.cpus());
+// console.log(os.platform());
+// console.log(os.homedir());
+
+
+// Version 3 
+//Express Server
+// import express from 'express'
+// const app = express();
+
+// //Middle Ware
+// app.use(express.json());
+
+// app.get("/hello",(req,res)=>{
+//     const Name = req.query.name
+//     res.send(`Hello !  ${Name}`);
+// });
+// app.get("/home",(req,res)=>{
+//     res.send("Welcome to home");
+// });
+// app.get("/client",(req,res)=>{
+//     res.send("Welcome  to  Client Route")
+// })
+// app.post("/data",(req,res)=>{
+//     res.json({received: req.body});
+// });
+
+// app.use((req,res,next)=>{
+//     console.log(req.method,req.path)
+//     next();
+// });
+
+
+// app.listen(5000,()=>{
+//     console.log("Your sever is running on http://localhost:5000")
+// });
+
+import express from 'express';
+const app = express();
+const PORT = 5000;
+
+// Middleware to read JSON
+app.use(express.json());
+
+// Custom middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
+
+// Route 1 — GET /
+// app.get("/", (req, res) => {
+//   res.send("Server is running!");
+// });
+
+// Route 2 — GET /about
+// app.get("/about", (req, res) => {
+//   res.json({ message: "This is the about route" });
+// });
+
+// Route 3 — POST /data
+// app.post("/data", (req, res) => {
+//   res.status(200).json({ received: req.body });
+// });
+
+// Query Parameter Route
+// app.get("/hello", (req, res) => {
+//   const name = req.query.name || "Guest";
+//   res.send(`Hello, ${name}`);
+// });
+
+
+//params
+// app.get('/:id',(req,res)=>{
+//     const usrId = req.params.id;
+//     res.send(`User Id is ${usrId}`)
+// })
+// app.get("/test/:id", (req, res) => {
+//     res.send("ID is " + req.params.id);
+//   });
+  
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+import usersRoutes from './routes/usersRoutes.js'
+
+app.use('/',usersRoutes);
+
+
